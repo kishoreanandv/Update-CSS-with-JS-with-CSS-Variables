@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Variables</title>
+    <style>
+
+      :root
+      {
+        --base:#c0392b;
+        --space:10px;
+        --blur:0px;
+      }
+      body {
+        text-align: center;
+        background: #34495e;
+        color: #ecf0f1;
+        font-family: poppins;
+        font-size: 1.5em;
+      }
+.controls{
+  margin-bottom: 40px;
+}
+
+input{
+  width: 100px;
+  
+}
+img{
+  height: 50vh;
+  width: 80vh;
+  /* using variable as values in CSS */
+  padding: var(--space);
+  background: var(--base);
+  /* To blur use Filter and pass variable AS blue Value */
+  filter: blur(var(--blur));
+}
+
+.highlight
+{
+  color: var(--base);
+}
+
+    </style>
+  </head>
+  <body>
+    <h2>UPDATE CSS WITH <span class="highlight">JavaScript</span></h2>
+    <div class="controls">
+      <label for="space">SPACE:</label>
+        <input type="range" min="10" max="50" name="space" value="10" data-size="px"/>
+    </label >
+      <label for="blur">BLUR:</label>
+        <input type="range" name="blur" min ="0" max ="10" value="0" data-size="px"/>
+      </label><br/>
+      <label for="base">Base Color:</label>
+        <input type="color" name="base" value="#c0392b" />
+      </label>
+    </div>
+    <img class="highlight" src="https://wallpaperaccess.com/full/414982.jpg">
+    <script>
+// geting all inputs from control Div 
+      const allInput = document.querySelectorAll(".controls input");
+      // using forEach to select induvidual input with their values.
+      allInput.forEach(input=>input.addEventListener('change',updateCss));
+      allInput.forEach(input=>input.addEventListener('mousemove',updateCss));
+
+function updateCss()
+{
+  // dataset will retrive all attributes with data- and store as node.
+  // we use || '' becaudse only two input needs px as suffix not the color one.
+  const suffix = this.dataset.size||'';
+  // this.name will retrive name from node of dataset and this.value is current value of input
+  document.documentElement.style.setProperty(`--${this.name}`,this.value + suffix)
+
+}
+
+    </script>
+  </body>
+</html>
